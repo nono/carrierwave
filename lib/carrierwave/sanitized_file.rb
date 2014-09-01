@@ -185,6 +185,7 @@ module CarrierWave
       else
         File.open(new_path, "wb") { |f| f.write(read) }
       end
+      Rails.logger.info "CarrierWave move_to #{path} -> #{new_path} (#{File.size new_path})"
       chmod!(new_path, permissions)
       if keep_filename
         self.file = {:tempfile => new_path, :filename => original_filename}
@@ -217,6 +218,7 @@ module CarrierWave
       else
         File.open(new_path, "wb") { |f| f.write(read) }
       end
+      Rails.logger.info "CarrierWave copy_to #{path} -> #{new_path} (#{File.size new_path})"
       chmod!(new_path, permissions)
       self.class.new({:tempfile => new_path, :content_type => content_type})
     end
