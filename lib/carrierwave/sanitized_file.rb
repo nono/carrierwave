@@ -90,6 +90,11 @@ module CarrierWave
     # [Integer] the file's size in bytes.
     #
     def size
+      @_size = _size if @_size.nil?
+      @_size
+    end
+
+    def _size
       if is_path?
         exists? ? File.size(path) : 0
       elsif @file.respond_to?(:size)
@@ -142,8 +147,8 @@ module CarrierWave
     # [Boolean] Whether the file exists
     #
     def exists?
-      return File.exist?(self.path) if self.path
-      return false
+      @_exists = self.path && File.exist?(self.path) if @_exists.nil?
+      @_exists
     end
 
     ##
